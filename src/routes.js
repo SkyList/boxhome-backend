@@ -4,6 +4,7 @@ const multerConfig = require('./config/multer')
 
 const routes = express.Router()
 
+const FileMiddleware = require('./middlewares/FileMiddleware')
 const BoxController = require('./controllers/BoxController')
 const FileController = require('./controllers/FileController')
 
@@ -16,6 +17,11 @@ routes.post('/boxes',
 routes.post('/boxes/:id/files',
 	multer(multerConfig).single('file'),
 	FileController.store
+)
+
+routes.delete('/file/:id',
+	FileMiddleware,
+	FileController.remove
 )
 
 module.exports = routes

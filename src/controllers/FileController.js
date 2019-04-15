@@ -17,8 +17,21 @@ class FileController {
 		req.io.sockets.in(box._id).emit('file', file)
 
 		return res.json(file)
-
 	}
+
+	async getFileById(id) {
+		const file = await File.findById(id)
+		return file.path
+	}
+
+	async remove(req, res) {
+		const file = await File.findByIdAndDelete(req.params.id)
+
+		return res.json(file.path)
+	}
+
+
+
 }
 
 module.exports = new FileController()
